@@ -1,0 +1,32 @@
+{
+  "name": "eventz",
+  "version": "1.0.0",
+  "description": "RESTful API for eventz app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shlomi-atzmon/eventz.git"
+  },
+  "keywords": [
+    "node",
+    "restful",
+    "api"
+  ],
+  "author": "Shlomi Atzmon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shlomi-atzmon/eventz/issues"
+  },
+  "homepage": "https://github.com/shlomi-atzmon/eventz#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
