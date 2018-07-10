@@ -5,12 +5,35 @@ const app = express();
 // HTTP request logger middleware
 const morgan = require('morgan');
 
+// Handel the body post request
+const bodyParser = require('body-parser');
+
 // require all routes
 const eventRoutes = require('./api/routes/events');
 const userRoutes = require('./api/routes/users');
 
 // sets up a log middleware - call the routes function next
 app.use(morgan('dev'));
+
+// sets a body-parser middleware to parse body data
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
+// solve the CORS Cross-Origin Resource Sharing error
+// to set it only for my site use https://sitename.com instead of *
+app.use((req,res,next) => {
+  res.header('Access-Control-Allow-Origin','*');
+  res.header('Access-Control-Allow-Headrs',
+  'Origin, X-Requested-with, Content-Type, Accept, Authorization');
+
+  // the incoming request eq to options
+  // a browser will always sand an options req (pre-flight) before other req  
+  if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+      return res.status(200).json({});
+  }
+  next();
+});
 
 // sets up a route middleware
 // an incoming request must pass here
