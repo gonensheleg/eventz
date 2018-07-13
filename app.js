@@ -7,10 +7,17 @@ const morgan = require('morgan');
 
 // Handel the body post request
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 // require all routes
 const eventRoutes = require('./api/routes/events');
 const userRoutes = require('./api/routes/users');
+
+mongoose.connect('mongodb://localhost/eventz').then((value) => {
+  console.log('Connected to MongoDb')
+}).catch((err) => {
+  console.error('Could not connected to MongoDb',err)
+});
 
 // sets up a log middleware - call the routes function next
 app.use(morgan('dev'));
@@ -27,7 +34,7 @@ app.use((req,res,next) => {
   'Origin, X-Requested-with, Content-Type, Accept, Authorization');
 
   // the incoming request eq to options
-  // a browser will always sand an options req (pre-flight) before other req  
+  // a browser will always sand an options req (pre-flight) before other req
   if (req.method === 'OPTIONS') {
       res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
       return res.status(200).json({});
