@@ -10,8 +10,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 // require all routes
-const eventRoutes = require('./api/routes/events');
-const userRoutes = require('./api/routes/users');
+const eventRoutes = require('./api/routes/events/events');
+const userRoutes = require('./api/routes/users/users');
 
 mongoose.connect('mongodb://localhost/eventz').then((value) => {
   console.log('Connected to MongoDb')
@@ -44,8 +44,8 @@ app.use((req,res,next) => {
 
 // sets up a route middleware
 // an incoming request must pass here
-app.use('/events',eventRoutes);
-app.use('/users',userRoutes);
+app.use('/events/events',eventRoutes);
+app.use('/users/users',userRoutes);
 
 // handel every request that reaches this line
 // no route was able to handle this request
