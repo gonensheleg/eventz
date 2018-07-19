@@ -13,7 +13,9 @@ const mongoose = require('mongoose');
 const eventRoutes = require('./api/routes/events/events');
 const userRoutes = require('./api/routes/users/users');
 
-mongoose.connect('mongodb://localhost/eventz').then((value) => {
+const mongoConnetionString = process.env.MONGODB_URL || 'mongodb://localhost/eventz'
+
+mongoose.connect(mongoConnetionString).then((value) => {
   console.log('Connected to MongoDb')
 }).catch((err) => {
   console.error('Could not connected to MongoDb',err)
