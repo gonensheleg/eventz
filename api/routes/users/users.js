@@ -18,7 +18,7 @@ router.get('/',(req,res,next) => {
             phone: doc.phone,
             request: {
               type: 'GET',
-              url: 'http://localhost:3000/users/users/' + doc._id
+              url: 'http://localhost:3000/users/' + doc._id
             }
           }
         })
@@ -50,7 +50,7 @@ router.post('/',(req,res,next) => {
         phone:result.phone,
         request:{
           type: 'GET',
-          url:'http://localhost:3000/users/users/' + result._id
+          url:'http://localhost:3000/users/' + result._id
         }
       }
     });
@@ -64,17 +64,57 @@ router.post('/',(req,res,next) => {
 });
 
 router.get('/:userId',(req,res,next) => {
+  const id = req.params.userId;
+  User.findById(id)
+  .select('_id name email phone')
+  .exec()
+  .then((doc) => {
+    if(doc){
+      res.status(200).json(doc);
+    }else{
+      res.status(404).json({
+        message:"No valid entry found for provided ID"
+      });
+    }
+  })
+  .catch((err) => {
+    res.status(500).json({error: err});
+  });
+});
+
+router.patch('/:userId',(req,res,next) => {
+  const id = req.params.userId;
+  const updateOps = {};
+  for(const ops of req.body){
+     updateOps[ops.propName] = ops.value;
+  }
+  User.update({_id:id},{$set: updateOps}).exec()
+  .then((result) => {
     res.status(200).json({
-      message:'User details',
-      id:req.params.userId
+      message:'Updated user!',
+      request:{
+        type: 'GET',
+        url:'http://localhost:3000/users/' + id
+      }
     });
+  })
+  .catch((err) => {
+    res.status(500).json({error:err});
+  });
 });
 
 router.delete('/:userId',(req,res,next) => {
+  const id = req.params.userId;
+  User.remove({_id:id}).exec()
+  .then((value) => {
     res.status(200).json({
-      message:'User delete',
-      id:req.params.userId
+      message:'Deleted user!',
+      id:id
     });
+  })
+  .catch((err) => {
+    res.status(500).json({error: err});
+  });
 });
 
 module.exports = router;

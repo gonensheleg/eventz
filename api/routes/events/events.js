@@ -24,7 +24,7 @@ router.get('/', (req,res,next) => {
               updated_at: doc.updated_at,
               request: {
                 type: 'GET',
-                url: 'http://localhost:3000/events/events/' + doc._id
+                url: 'http://localhost:3000/events/' + doc._id
               }
             }
           })
@@ -66,7 +66,7 @@ router.post('/', (req,res,next) => {
           location:result.location,
           request:{
             type: 'GET',
-            url:'http://localhost:3000/events/events/' + result._id
+            url:'http://localhost:3000/events/' + result._id
           }
         }
       });
@@ -84,7 +84,6 @@ router.get('/:eventId',(req,res,next) => {
   .select('_id name location')
   .exec()
   .then((doc) => {
-    console.log('Fetching from database: ' ,doc);
     if(doc){
       res.status(200).json(doc);
     }else{
@@ -94,7 +93,6 @@ router.get('/:eventId',(req,res,next) => {
     }
   })
   .catch((err) => {
-    console.log(err);
     res.status(500).json({error: err});
   });
 });
