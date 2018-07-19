@@ -46,8 +46,8 @@ app.use((req,res,next) => {
 
 // sets up a route middleware
 // an incoming request must pass here
-app.use('/events/events',eventRoutes);
-app.use('/users/users',userRoutes);
+app.use('/events',eventRoutes);
+app.use('/users',userRoutes);
 
 // handel every request that reaches this line
 // no route was able to handle this request
