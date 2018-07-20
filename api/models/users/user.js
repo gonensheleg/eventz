@@ -2,35 +2,17 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  name: {
-    type: String,
-    required: true,
-    minlength:2,
-    maxlength:60,
-  },
-  email: {
-    type: String,
-    minlength: 5,
-    maxlength: 255,
-    unique: true,
-    required: true
-    },
+  name: { type: String, required: true, minlength:2, maxlength:60 },
+  email: { type: String, minlength: 5, maxlength: 255, unique: true, required: true },
+  password: { type: String, required: true, minlength:8, maxlength:1024 },
+  status: { type: Boolean , default: false },
   phone: String,
   token: String,
-  password: {
-    type: String,
-    required: true,
-    minlength:8,
-    maxlength:1024
-  },
-  status: { type: Boolean , default: false}
 },{
   timestamps: true
 });
 
 module.exports = mongoose.model('User', userSchema);
-
-
 
 //match: /pattern/
 //enum: [array of valid strings] like ["shlomi","gonen"]
