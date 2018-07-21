@@ -2,6 +2,13 @@
 const express = require('express');
 const app = express();
 
+// organizes hierarchical configurations - depends on NODE_ENV
+const config = require('config');
+
+// debugging utility depends on - depends on debug env
+const debug = require('debug')('app:startup');
+// const dbDebugger = require('debug')('app:db');
+
 // HTTP request logger middleware
 const morgan = require('morgan');
 
@@ -13,16 +20,17 @@ const mongoose = require('mongoose');
 const eventRoutes = require('./api/routes/events/events');
 const userRoutes = require('./api/routes/users/users');
 
-const mongoConnetionString = process.env.MONGODB_URL || 'mongodb://localhost/eventz'
+// checks for the custom-environment-variables.json
+const mongoConnetionString = config.get('mongoUrl');
 
 mongoose.connect(mongoConnetionString).then((value) => {
-  console.log('Connected to MongoDb')
+  debug('Connected to MongoDb');
 }).catch((err) => {
   console.error('Could not connected to MongoDb',err)
 });
 
-// sets up a log middleware - call the routes function next
-app.use(morgan('dev'));
+// sets up a log middleware - only for dev
+if(app.get('env') === 'development') app.use(morgan('dev'));
 
 // sets a body-parser middleware to parse body data
 app.use(bodyParser.urlencoded({extended: false}));

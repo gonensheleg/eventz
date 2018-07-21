@@ -1,0 +1,4 @@
+{
+  "mongoUrl":"MONGODB_URL",
+  "appPort":"PORT"
+}
