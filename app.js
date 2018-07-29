@@ -40,6 +40,7 @@ app.use(bodyParser.json());
 // to set it only for my site use https://sitename.com instead of *
 app.use((req,res,next) => {
   res.header('Access-Control-Allow-Origin','*');
+   res.header('Access-Control-Allow-Headers','*');
   res.header('Access-Control-Allow-Headrs',
   'Origin, X-Requested-with, Content-Type, Accept, Authorization');
 
