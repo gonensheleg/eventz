@@ -40,9 +40,8 @@ app.use(bodyParser.json());
 // to set it only for my site use https://sitename.com instead of *
 app.use((req,res,next) => {
   res.header('Access-Control-Allow-Origin','*');
-   res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-//  res.header('Access-Control-Allow-Headrs',
-  //'Origin, X-Requested-with, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Headrs',
+  'Origin, X-Requested-with, Content-Type, Accept, Authorization');
 
   // the incoming request eq to options
   // a browser will always sand an options req (pre-flight) before other req
